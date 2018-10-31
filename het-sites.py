@@ -7,13 +7,6 @@ from dark.fasta import FastaReads
 from math import log10
 import argparse
 
-parser = argparse.ArgumentParser()
-
-parser.add_argument("--homogen", type=int,
-                    help="fraction of one base at a site at which a site is considered to be homogeneious.")
-
-args = parser.parse_args()
-
 reads = list(FastaReads('Alignment-CavV-strains.fasta'))
 
 if len(set(len(read) for read in reads)) != 1:
