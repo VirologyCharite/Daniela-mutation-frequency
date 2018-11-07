@@ -31,14 +31,14 @@ if args.reference is not None:
     mutationsdict = compareToRef(referenceread, reads, length)
     # C{defaultdict} containing mutation counts.
     totalmutations = sum(mutationsdict.values())
-    mutationsSorted = sorted(zip(mutationsdict.values(), mutationsdict.keys()), reverse=True)
+    mutationsSorted = sorted(zip(mutationsdict.values(), mutationsdict), reverse=True)
     # Mutationsdict sorted by count.
 
 print('Total count of mutations in sequences as compared to the reference sequence:')
 for mutation in mutationsSorted:
-    countofmutation = mutation[0]
-    frequency = countofmutation/totalmutations
-    print('%s mutations occur with a frequency of %f, %*d of %d.' % (mutation[1], frequency, 4, countofmutation, totalmutations))     
+    mutationCount, mutationType = mutation
+    frequency = mutationCount/totalmutations
+    print('%s mutations occur with a frequency of %f, %*d of %d.' % (mutationType, frequency, 4, mutationCount, totalmutations))     
 
 # Call heterogeneousSites function.
 heterogeneous = heterogeneousSites(reads, length, args.homogenFraction)

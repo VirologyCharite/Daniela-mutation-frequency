@@ -56,7 +56,7 @@ def compareToRef(referenceread, reads, length):
         refbase = reference.sequence[index]
         if refbase == 'U':
             refbase = 'T'       
-        if refbase == '-':
+        elif refbase == '-':
             # Exclude gaps.
             continue
 
