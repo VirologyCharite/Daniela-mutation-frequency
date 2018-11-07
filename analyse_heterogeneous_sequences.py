@@ -6,14 +6,14 @@ from heterogeneous_sequences import heterogeneousSites, compareToRef
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--homogenCutoff", type=float, default=1.0,
-                    help="Cutoff fraction defining a site as homogeneous. 0.9 means 90\% or more is considered to be homogeneous.")
+parser.add_argument("--homogenFraction", type=float, default=1.0,
+                    help="If the fraction of the most common nucleotide at a site is at least this value, the site will be considered homogenous.")
 parser.add_argument("--reference",
                     help="Filename of the reference fasta sequence.")
 args = parser.parse_args()
 
-if 0 < args.homogenCutoff < 1:
-    raise ValueError('--homogenCutoff needs to be between 0 and 1.')
+if 0 < args.homogenFraction < 1:
+    raise ValueError('--homogenFraction needs to be between 0 and 1.')
 
 reads = list(FastaReads('Alignment-CavV-strains.fasta'))
 
@@ -38,7 +38,7 @@ for mutation in mutationsSorted:
     print('%s mutations occur with a frequency of %f, %*d of %d.' % (mutation[1], frequency, 4, countofmutation, totalmutations))     
 
 # Call heterogeneousSites function.
-heterogeneous = heterogeneousSites(reads, length, args.homogenCutoff)
+heterogeneous = heterogeneousSites(reads, length, args.homogenFraction)
 
 print('List of heterogeneous sites:')
 width = int(log10(length)) + 1
