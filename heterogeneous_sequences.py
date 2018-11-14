@@ -25,9 +25,9 @@ def heterogeneousSites(reads, length, homogeneous_frequency):
                 # Ignore gaps.
                 counts[read.sequence[index]] += 1
 
-        if counts:
+        if len(counts) > 1:
             # The site is not homogenous = more than one nucleotide present.
-            if (counts.most_common(1)[0][1] / sum(counts.values()) < homogeneous_frequency):
+            if (counts.most_common(1)[0][1] / sum(counts.values()) <= homogeneous_frequency):
                 result[index] = counts
 
     return result
@@ -44,16 +44,15 @@ def compareToRef(referenceread, reads, length):
         as values.
     """
 
-    reference = referenceread
-    totalsitesmutated = 0
+    #reference = referenceread
 
-    if len(reference.sequence) != length:
+    if len(referenceread.sequence) != length:
         raise ValueError('Reference read length is not the same as length of other reads.')
 
     mutations = defaultdict(int)
 
     for index in range(length):
-        refbase = reference.sequence[index]
+        refbase = referenceread.sequence[index]
         if refbase == 'U':
             refbase = 'T'       
         elif refbase == '-':
@@ -69,6 +68,12 @@ def compareToRef(referenceread, reads, length):
                 continue
 
             mutations['%s to %s' % (refbase, base)] += 1
+
+    for letter in 'ACGT':
+        for letter2 in 'ATCG':
+            if letter != letter2:
+                if '%s to %s' % (letter, letter2) not in mutations:
+                    mutations['%s to %s' % (letter, letter2)] = 0
 
     return mutations
 

@@ -8,7 +8,7 @@ import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--homogenFraction", type=float, default=1.0,
-                    help="If the fraction of the most common nucleotide at a site is at least this value, the site will be considered homogenous.")
+                    help="If the fraction of the most common nucleotide at a site is bigger than this value, the site will be considered homogenous.")
 parser.add_argument("--reference",
                     help="Filename of the reference fasta sequence.")
 parser.add_argument("--reads", default=sys.stdin,
@@ -34,11 +34,11 @@ if args.reference is not None:
     mutationsSorted = sorted(zip(mutationsdict.values(), mutationsdict), reverse=True)
     # Mutationsdict sorted by count.
 
-print('Total count of mutations in sequences as compared to the reference sequence:')
-for mutation in mutationsSorted:
-    mutationCount, mutationType = mutation
-    frequency = mutationCount/totalmutations
-    print('%s mutations occur with a frequency of %f, %*d of %d.' % (mutationType, frequency, 4, mutationCount, totalmutations))     
+    print('Total count of mutations in sequences as compared to the reference sequence:')
+    for mutation in mutationsSorted:
+        mutationCount, mutationType = mutation
+        frequency = mutationCount/totalmutations
+        print('%s mutations occur with a frequency of %f, %*d of %d.' % (mutationType, frequency, 4, mutationCount, totalmutations))     
 
 # Call heterogeneousSites function.
 heterogeneous = heterogeneousSites(reads, length, args.homogenFraction)

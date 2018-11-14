@@ -124,7 +124,18 @@ class TestCompareToReference(TestCase):
 
         reads = Reads()
 
-        self.assertEqual({}, compareToRef(referenceread, reads, len(referenceread)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 0, 
+                        'C to T': 0, 
+                        'G to A': 0, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, compareToRef(referenceread, reads, len(referenceread)))
 
     def testOneReadNoDifference(self):
         """
@@ -135,7 +146,18 @@ class TestCompareToReference(TestCase):
         read = Read('id', 'ACCG')
         reads = Reads([read])
 
-        self.assertEqual({}, compareToRef(referenceread, reads, len(read)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 0, 
+                        'C to T': 0, 
+                        'G to A': 0, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, compareToRef(referenceread, reads, len(read)))
 
     def testOneReadOneDifference(self): 
         """
@@ -147,7 +169,18 @@ class TestCompareToReference(TestCase):
         read = Read('id', 'ACCA')
         reads = Reads([read])
 
-        self.assertEqual({'G to A': 1}, compareToRef(referenceread, reads, len(read)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 0, 
+                        'C to T': 0, 
+                        'G to A': 1, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, compareToRef(referenceread, reads, len(read)))
 
     def testAllPossibleDifferences(self):
         """
@@ -183,7 +216,19 @@ class TestCompareToReference(TestCase):
         read = Read('id', 'AGGAAA')
         reads = Reads([read, Read('id2', 'AGGAAA')])
 
-        self.assertEqual({'C to G': 4, 'G to A': 6}, compareToRef(referenceread, reads, len(read)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 4, 
+                        'C to T': 0, 
+                        'G to A': 6, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, 
+                        compareToRef(referenceread, reads, len(read)))
 
     def testGapInReference(self):
         """
@@ -194,7 +239,18 @@ class TestCompareToReference(TestCase):
         read = Read('id', 'ACCG')
         reads = Reads([read])
 
-        self.assertEqual({}, compareToRef(referenceread, reads, len(read)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 0, 
+                        'C to T': 0, 
+                        'G to A': 0, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, compareToRef(referenceread, reads, len(read)))
 
     def testGapInReadNoMutation(self):
         """
@@ -205,7 +261,18 @@ class TestCompareToReference(TestCase):
         read = Read('id', 'ACC-')
         reads = Reads([read])
 
-        self.assertEqual({}, compareToRef(referenceread, reads, len(read)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 0, 
+                        'C to T': 0, 
+                        'G to A': 0, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, compareToRef(referenceread, reads, len(read)))
 
     def testGapInReadAndMutation(self):
         """
@@ -217,7 +284,18 @@ class TestCompareToReference(TestCase):
         read = Read('id', 'ACC-G')
         reads = Reads([read, Read('id2', 'ACCAA')])
 
-        self.assertEqual({'G to A': 2}, compareToRef(referenceread, reads, len(read)))
+        self.assertEqual({'A to C': 0, 
+                        'A to G': 0, 
+                        'A to T': 0, 
+                        'C to A': 0, 
+                        'C to G': 0, 
+                        'C to T': 0, 
+                        'G to A': 2, 
+                        'G to C': 0, 
+                        'G to T': 0,
+                        'T to A': 0, 
+                        'T to C': 0, 
+                        'T to G': 0}, compareToRef(referenceread, reads, len(read)))
 
     def testLengthDifference(self):
         """
